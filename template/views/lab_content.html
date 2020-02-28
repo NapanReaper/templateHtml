@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/style.css">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            // $.getJSON("/student.json", function (data) {
+            // });
+            var t = $('#example').DataTable({
+                "ajax": { "url": "/book.json", "dataSrc": "problems" },
+                "columns": [
+                    { "data": "Id" },
+                    { "data": "Name" },
+                    { "data": "Contents" },
+                    { "data": "LOC" }
+                ]
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="sidenav">
+        <p>Lab Contents</p>
+        <p>Progress</p>
+        <p>Contacts</p>
+        <p>Policies</p>
+        <p>Exit</p>
+    </div>
+    <div class="main">
+        <div>
+            <div style="float:left">
+                <p>Lab Contents</p>
+                <p id="studentName">DuyDTN</p>
+                <a href="viewLab.html">abc</a>
+            </div>
+            <div style="float:right">
+                <p>SE13001</p>
+            </div>
+
+        </div>
+        <table id="example" class="display" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Contens</th>
+                    <th>LOC</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+</body>
+
+</html>
