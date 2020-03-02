@@ -23,16 +23,17 @@ http.createServer((req, res) => {
             res.end();
         });
     }
-    if (req.url.indexOf('/Java') == 0) { //req.url has the pathname, check if it conatins '.html'
+    if (req.url.indexOf('/Java') == 0 && req.url.indexOf('.pdf') == -1) { //req.url has the pathname, check if it conatins '.html'
         fs.readFile(__dirname + '/data' + `${req.url}.json`, (err, data) => {
             if (err) console.log(err);
             let excercise = ""
-            if (err) console.log(err);
             excercise = JSON.parse(data);
             fs.readFile(__dirname + '/template/views/viewLab.html', function (err, data) {
+                if (err) console.log(err);
                 res.writeHead(200, { 'Content-Type': 'text/html' });
                 res.write(data);
-                res.write(`<script>loadExceriseDetail("${excercise.Name}","${excercise.LOC}")</script></body></html>`)
+                res.write(`<script>loadExceriseDetail("${excercise.Name}","${excercise.LOC}");`)
+                res.write(`\n loadPdfAndPaging("${excercise.Contents}")</script></body></html>`)
                 res.end();
             });
         });
@@ -69,7 +70,7 @@ http.createServer((req, res) => {
             res.end();
         });
     }
-    if (req.url.indexOf('.pdf') != -1) { //req.url has the pathname, check if it conatins '.pdf'
+    if (req.url.indexOf('.pdf') != -1 && req.url.indexOf('.json') == -1) { //req.url has the pathname, check if it conatins '.pdf'
         fs.readFile(__dirname + '/data' + req.url, function (err, data) {
             if (err) console.log(err);
             res.writeHead(200, { 'Content-Type': 'application/pdf' });

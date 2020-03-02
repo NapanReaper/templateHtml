@@ -1,6 +1,6 @@
 // If absolute URL from the remote server is provided, configure the CORS
 // header on that server.
-var url = 'test.pdf';
+var url = 'JavaLab01.pdf';
 
 // Loaded via <script> tag, create shortcut to access PDF.js exports.
 
