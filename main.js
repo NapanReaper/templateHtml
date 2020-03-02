@@ -12,7 +12,7 @@ const PORT = 1800;
 // helps browser to understand what to do 
 // with the file 
 // Creating a server and listening at port 1800 
-json2File.transfer("book");
+// json2File.transfer("book");
 http.createServer((req, res) => {
     console.log(`${req.method} : ${req.url}`)
     if (req.url.indexOf('.html') != -1) { //req.url has the pathname, check if it conatins '.html'
@@ -21,6 +21,20 @@ http.createServer((req, res) => {
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.write(data);
             res.end();
+        });
+    }
+    if (req.url.indexOf('/Java') == 0) { //req.url has the pathname, check if it conatins '.html'
+        fs.readFile(__dirname + '/data' + `${req.url}.json`, (err, data) => {
+            if (err) console.log(err);
+            let excercise = ""
+            if (err) console.log(err);
+            excercise = JSON.parse(data);
+            fs.readFile(__dirname + '/template/views/viewLab.html', function (err, data) {
+                res.writeHead(200, { 'Content-Type': 'text/html' });
+                res.write(data);
+                res.write(`<script>loadExceriseDetail("${excercise.Name}","${excercise.LOC}")</script></body></html>`)
+                res.end();
+            });
         });
     }
     if (req.url.indexOf('.js') != -1 && req.url.indexOf('node_modules') == -1 && req.url.indexOf('.json') == -1) { //req.url has the pathname, check if it conatins '.js'
@@ -56,7 +70,7 @@ http.createServer((req, res) => {
         });
     }
     if (req.url.indexOf('.pdf') != -1) { //req.url has the pathname, check if it conatins '.pdf'
-        fs.readFile(__dirname + '/' + req.url, function (err, data) {
+        fs.readFile(__dirname + '/data' + req.url, function (err, data) {
             if (err) console.log(err);
             res.writeHead(200, { 'Content-Type': 'application/pdf' });
             res.write(data);

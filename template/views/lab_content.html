@@ -8,27 +8,35 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/loadStudentInfo.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="/style.css">
     <script type="text/javascript">
         $(document).ready(function () {
-            // $.getJSON("/student.json", function (data) {
-            // });
             var t = $('#example').DataTable({
-                "ajax": { "url": "/book.json", "dataSrc": "problems" },
+                "ajax": { "url": "/labs.json", "dataSrc": "problems" },
                 "columns": [
                     { "data": "Id" },
                     { "data": "Name" },
                     { "data": "Contents" },
-                    { "data": "LOC" }
-                ]
+                    { "data": "LOC" },
+                    { "data": "Id" }
+                ], "initComplete": function (settings, json) {
+                    $("#example tbody tr").each(function (index, tr) {
+                        var lines = $('td', tr).map(function (index, td) {
+                            return $(td).text();
+                        });
+                        $(this).find("td:last-child").html(`<a class="btn btn-primary" href="${lines[4]}" role="button">View Detail</a>`);
+                    });
+                }
             });
         });
     </script>
 </head>
 
 <body>
+
     <div class="sidenav">
         <p>Lab Contents</p>
         <p>Progress</p>
@@ -40,11 +48,10 @@
         <div>
             <div style="float:left">
                 <p>Lab Contents</p>
-                <p id="studentName">DuyDTN</p>
-                <a href="viewLab.html">abc</a>
+                <p id="studentName"></p>
             </div>
             <div style="float:right">
-                <p>SE13001</p>
+                <p id="studentId"></p>
             </div>
 
         </div>
@@ -55,6 +62,7 @@
                     <th>Name</th>
                     <th>Contens</th>
                     <th>LOC</th>
+                    <th>Action</th>
                 </tr>
             </thead>
         </table>

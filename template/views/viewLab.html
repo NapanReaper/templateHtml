@@ -2,17 +2,24 @@
 <html>
 
 <head>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script>
+    <script src="/loadStudentInfo.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/style.css">
+    <script>
+        function loadExceriseDetail(name, loc) {
+            $('#excerciseName').html(name)
+            $('#LOC').html(loc)
+        }
+    </script>
 </head>
 
 <body>
     <div class="sidenav">
-        <p>Lab Contents</p>
+        <a href="lab_content.html">Lab Contents</a>
         <p>Progress</p>
         <p>Contacts</p>
         <p>Policies</p>
@@ -21,23 +28,32 @@
     <div class="main">
         <div>
             <div style="float:left">
-                <p>Lab Contents</p>
-                <a href="lab_content.html">def</a>
+                <p id="studentName"></p>
+                <p id="excerciseName">Lab Contents</p>
+                <b id="LOC"></b>
+
             </div>
             <div style="float:right">
-                <p>SE13001</p>
+                <p id="studentId"></p>
             </div>
             <div style="width: 100%; float: left;">
                 <div style="float:left">
                     <button id="prev" style="font-size: 15px;">Previous</button>
                     <button id="next" style="font-size: 15px;">Next</button>
-                    <span style="font-size: 15px;">Page: <span id="page_num"></span> / <span id="page_count"></span></span>
+                    <span style="font-size: 15px;">Page: <span id="page_num"></span> / <span
+                            id="page_count"></span></span>
                     <br>
                     <canvas id="the-canvas"></canvas>
                 </div>
-
+                <div style="float:left">
+                    <a class="btn btn-primary" href="#" role="button">Open In NetBeans</a>
+                    <br>
+                    <a class="btn btn-primary" href="#" role="button">Submit</a>
+                    <br>
+                    <a class="btn btn-primary" href="#" role="button">Save</a>
+                    <br>
+                </div>
             </div>
         </div>
-</body>
-<script src="/pdfPaging.js" id="script"></script>
-</html>
+    </div>
+    <script src="/pdfPaging.js"></script>

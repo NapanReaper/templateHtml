@@ -19,6 +19,13 @@ body {
   color: #818181;
   display: block;
 }
+.sidenav a {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #818181;
+  display: block;
+}
 .sidenav a:hover {
   color: #f1f1f1;
 }
@@ -35,4 +42,8 @@ body {
 }
 #prev #next {
   font-size: 15px !important;
+}
+.btn {
+  margin-top: 15px;
+  margin-left: 15px;
 }

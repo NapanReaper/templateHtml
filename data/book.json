@@ -1,6 +1,1 @@
-{
-  "problems": [
-    { "Id": "1", "Name": "Bai 1", "Contents": "abc.pdf", "LOC": "200" },
-    { "Id": "2", "Name": "Bai 3", "Contents": "abc.pdf", "LOC": "200" }
-  ]
-}
+{"problems":[{"Id":"1","Name":"Bai 1","Contents":"abc.pdf","LOC":"200"},{"Id":"2","Name":"Bai 3","Contents":"abc.pdf","LOC":"200"}]}
