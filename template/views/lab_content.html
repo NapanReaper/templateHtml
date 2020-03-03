@@ -3,36 +3,15 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
-    <script src="/loadStudentInfo.js"></script>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="/style.css">
-    <script type="text/javascript">
-        $(document).ready(function () {
-            var t = $('#example').DataTable({
-                "ajax": { "url": "/labs.json", "dataSrc": "problems" },
-                "columns": [
-                    { "data": "Id" },
-                    { "data": "Name" },
-                    { "data": "Contents" },
-                    { "data": "LOC" },
-                    { "data": "Id" }
-                ], "initComplete": function (settings, json) {
-                    $("#example tbody tr").each(function (index, tr) {
-                        var lines = $('td', tr).map(function (index, td) {
-                            return $(td).text();
-                        });
-                        $(this).find("td:last-child").html(`<a class="btn btn-primary" href="${lines[4]}" role="button">View Detail</a>`);
-                    });
-                }
-            });
-        });
-    </script>
+    <script src="/app.js"></script>
 </head>
 
 <body>
@@ -53,18 +32,8 @@
             <div style="float:right">
                 <p id="studentId"></p>
             </div>
-
         </div>
         <table id="example" class="display" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Name</th>
-                    <th>Contens</th>
-                    <th>LOC</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
         </table>
     </div>
 </body>
