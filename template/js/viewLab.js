@@ -1,9 +1,9 @@
 //caller
 const Caller = {
-    getLab: function () {
+    getLabPdf: function (url) {
         return new Promise(function (res, rej) {
             $.ajax({
-                'url': './labs.json',
+                'url': url,
                 'method': 'get',
                 'success': res,
                 'error': rej
@@ -16,8 +16,8 @@ const Caller = {
 const Model = {
     labs: [],
     init: function () {
-        Caller.getLab()
-            .then(Octopus.loadLabs)
+        Caller.getLabPdf()
+            .then(Octopus.loadLabPdf)
             .catch(function (e) {
                 console.log(e);
                 alert('Fail to load lab list. Please reload page!');
@@ -31,10 +31,10 @@ const Octopus = {
         Model.init();
         View.init();
     },
-    loadLabs: (labs) => {
+    loadLabPdf: (labs) => {
         Model.labs = labs.problems;
         View.renderLab(labs)
-    }, getLabs: function () {
+    }, getLabPdf: function () {
         return Model.labs;
     },
 }
@@ -44,8 +44,7 @@ const View = {
 
     },
     renderLab: function () {
-        let labs = Octopus.getLabs();
-        const labDisplay = document.querySelector('.entry-body')
+        let labs = Octopus.getLabPdf();
         $('#example').DataTable({
             data: labs,
             columns: [
