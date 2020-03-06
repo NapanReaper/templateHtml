@@ -3,8 +3,8 @@ const Caller = {
     getLab: function () {
         return new Promise(function (res, rej) {
             $.ajax({
-                'url': './labs.json',
-                'method': 'get',
+                'url': 'getLab',
+                'method': 'GET',
                 'success': res,
                 'error': rej
             });
@@ -14,7 +14,7 @@ const Caller = {
 
 // model
 const Model = {
-    labs: [],
+    labs: null,
     init: function () {
         Caller.getLab()
             .then(Octopus.loadLabs)
@@ -32,36 +32,39 @@ const Octopus = {
         View.init();
     },
     loadLabs: (labs) => {
-        Model.labs = labs.problems;
-        View.renderLab(labs)
+        Model.labs = labs;
+        View.renderLab()
     }, getLabs: function () {
         return Model.labs;
     },
 }
 //views
 const View = {
+    mainTable: null,
     init: function () {
-
+        this.mainTable = $('#example').DataTable({
+            data: [],
+            columns: [
+                { data: 'Id' },
+                { data: 'Name' },
+                { data: 'Content' },
+                { data: 'LOC' },
+                {
+                    render: function (data, type, row, meta) {
+                        return `<a class="btn btn-primary" href="${row.Content}" role="button">View Detail</a>`
+                    }
+                }
+            ]
+        });
     },
     renderLab: function () {
         let labs = Octopus.getLabs();
-        $('#example').DataTable({
-            data: labs,
-            columns: [
-                { data: 'Id', title: 'Id' },
-                { data: 'Name', title: 'Name' },
-                { data: 'Contents', title: 'Contents' },
-                { data: 'LOC', title: 'LOC' },
-                { data: 'Id', tittle: 'Action' }
-            ], "initComplete": function (settings, json) {
-                $("#example tbody tr").each(function (index, tr) {
-                    var lines = $('td', tr).map(function (index, td) {
-                        return $(td).text();
-                    });
-                    $(this).find("td:last-child").html(`<a class="btn btn-primary" href="${lines[4]}" role="button">View Detail</a>`);
-                });
-            }
+        View.mainTable.clear();
+        labs = JSON.parse(labs);
+        labs.forEach(e => {
+            View.mainTable.row.add(e);
         });
+        View.mainTable.draw();
     }
 }
 

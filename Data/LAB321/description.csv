@@ -1,0 +1,6 @@
+﻿Id,LAB321
+Problems
+Id,Name,FileName,LOC, Template
+1,lab1,lab1.pdf,400,"template1.zip,template2.zip"
+2,lab2,lab2.pdf,300,template1.zip
+3,lab3,lab3.pdf,200,default

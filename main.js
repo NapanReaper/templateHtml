@@ -3,7 +3,8 @@
 // Importing necessary modules 
 const http = require('http');
 const fs = require('fs');
-const json2File = require('./utils/jsonObject2File');
+const { httpListener } = require('./utils/httpListener');
+const LabDAO = require('./template/model/LabDAO')
 
 // Port on which the server will create 
 const PORT = 1800;
@@ -12,7 +13,7 @@ const PORT = 1800;
 // helps browser to understand what to do 
 // with the file 
 // Creating a server and listening at port 1800 
-http.createServer((req, res) => {
+var server = http.createServer((req, res) => {
     console.log(`${req.method} : ${req.url}`)
     if (req.url.indexOf('.html') != -1) { //req.url has the pathname, check if it conatins '.html'
         fs.readFile(__dirname + '/template/views' + req.url, function (err, data) {
@@ -21,6 +22,14 @@ http.createServer((req, res) => {
             res.write(data);
             res.end();
         });
+    }
+    if (req.url.indexOf('getLab') != -1) {
+        if (req.method == 'GET') {
+            let subjectId = LabDAO.readSubject();
+            data = LabDAO.readAssignmentBySubject(subjectId);
+            console.log(data);
+            res.end(JSON.stringify(data));
+        }
     }
     //req.url has the pathname, check if it conatins './Java'
     if (req.url.indexOf('/Java') == 0 && req.url.indexOf('.pdf') == -1 && req.url.indexOf('.json') == -1) {
@@ -85,5 +94,12 @@ http.createServer((req, res) => {
         });
     }
 }).listen(PORT);
+server.on('connection', function (sock) {
+    let ipv4Prefix = '::ffff:'
+    var ip = sock.remoteAddress.replace(ipv4Prefix, '')
+    // console.log('Client connected from: ' + ip);
 
-console.log(`Server listening on port ${PORT}`); 
+    // Client address at time of connection ----^
+    // httpListener(ip);
+});
+console.log(`Server listening on port ${PORT}`);

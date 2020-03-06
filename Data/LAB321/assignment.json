@@ -1,0 +1,5 @@
+{
+  "1": { "Id": "1", "Name": "lab1", "Content": "lab1.pdf", "LOC": "400" },
+  "2": { "Id": "2", "Name": "lab2", "Content": "lab2.pdf", "LOC": "300" },
+  "3": { "Id": "3", "Name": "lab3", "Content": "lab3.pdf", "LOC": "200" }
+}

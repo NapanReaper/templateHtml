@@ -1,6 +1,0 @@
-{
-  "problems": [
-    { "Id": "JavaLab01", "Name": "The Hotel", "Contents": "JavaLab01.pdf", "LOC": "200+" },
-    { "Id": "JavaLab02", "Name": "Shushi", "Contents": "JavaLab02.pdf", "LOC": "300+" }
-  ]
-}
