@@ -1,16 +1,10 @@
-function getURL() {
-    var pageURL = $(location).attr("href");
-    var parts = pageURL.split("/");
-    var result = parts[parts.length - 1];
-    return result;
-}
 //caller
 const Caller = {
     getLab: function () {
         return new Promise(function (res, rej) {
             $.ajax({
-                'url': getURL() + '.json',
-                'method': 'get',
+                'url': 'getLabPdf',
+                'method': 'GET',
                 'success': res,
                 'error': rej
             });
@@ -20,9 +14,9 @@ const Caller = {
 
 // model
 const Model = {
-    labs: [],
+    labs: null,
     init: function () {
-        Caller.getLab("")
+        Caller.getLab()
             .then(Octopus.loadLab)
             .catch(function (e) {
                 console.log(e);
@@ -39,10 +33,10 @@ const Octopus = {
     },
     loadLab: (labs) => {
         Model.labs = labs;
-        View.renderLab(labs)
+        View.renderLab()
     }, getLab: function () {
         return Model.labs;
-    },
+    }
 }
 //views
 const View = {
@@ -50,11 +44,13 @@ const View = {
 
     },
     renderLab: function () {
-        let lab = Octopus.getLab();
-        console.log(lab);
-        $('#excerciseName').html(lab.Name)
-        $('#LOC').html(lab.LOC)
-        loadPdfAndPaging(lab.Contents);
+        let labs = Octopus.getLab();
+        console.log(labs);
+
+        // console.log(lab);
+        // $('#excerciseName').html(lab.Name)
+        // $('#LOC').html(lab.LOC)
+        loadPdfAndPaging(labs);
     }
 }
 

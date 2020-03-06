@@ -15,15 +15,15 @@ const PORT = 1800;
 // Creating a server and listening at port 1800 
 var server = http.createServer((req, res) => {
     console.log(`${req.method} : ${req.url}`)
-    if (req.url.indexOf('.html') != -1) { //req.url has the pathname, check if it conatins '.html'
-        fs.readFile(__dirname + '/template/views' + req.url, function (err, data) {
+    if (req.url === '/') { //req.url has the pathname, check if it conatins '.html'
+        fs.readFile(__dirname + '/template/views/lab_content.html', function (err, data) {
             if (err) console.log(err);
             res.writeHead(200, { 'Content-Type': 'text/html' });
             res.write(data);
             res.end();
         });
     }
-    if (req.url.indexOf('getLab') != -1) {
+    if (req.url === '/getLab') {
         if (req.method == 'GET') {
             let subjectId = LabDAO.readSubject();
             data = LabDAO.readAssignmentBySubject(subjectId);
@@ -31,11 +31,15 @@ var server = http.createServer((req, res) => {
             res.end(JSON.stringify(data));
         }
     }
-    //req.url has the pathname, check if it conatins './Java'
-    if (req.url.indexOf('/Java') == 0 && req.url.indexOf('.pdf') == -1 && req.url.indexOf('.json') == -1) {
-        exports.getLabId = () => {
-            return req.url;
+    if (req.url === '/getLabPdf') {
+        if (req.method == 'GET') {
+            res.end('/Data/LAB321/Lab1/lab1.pdf');
         }
+    }
+    //req.url has the pathname, check if it conatins './Java'
+    if (req.url.indexOf('viewLab?') != -1) {
+        var labId = LabDAO.getLabById(req.url.replace('/', ''));
+        LabDAO.geLabPdfById(labId);
         fs.readFile(__dirname + '/template/views/viewLab.html', function (err, data) {
             if (err) console.log(err);
             res.writeHead(200, { 'Content-Type': 'text/html' });
@@ -43,7 +47,8 @@ var server = http.createServer((req, res) => {
             res.end();
         });
     }
-    if (req.url.indexOf('.js') != -1 && req.url.indexOf('node_modules') == -1 && req.url.indexOf('.json') == -1) { //req.url has the pathname, check if it conatins '.js'
+    if (req.url.indexOf('.js') != -1 && req.url.indexOf('node_modules') == -1
+        && req.url.indexOf('.json') == -1) { //req.url has the pathname, check if it conatins '.js'
         fs.readFile(__dirname + '/template/js' + req.url, function (err, data) {
             if (err) console.log(err);
             res.writeHead(200, { 'Content-Type': 'text/javascript' });
@@ -51,7 +56,8 @@ var server = http.createServer((req, res) => {
             res.end();
         });
     }
-    if (req.url.indexOf('.js') != -1 && req.url.indexOf('node_modules') != -1 && req.url.indexOf('.json') == -1) { //req.url has the pathname, check if it conatins '.js'
+    if (req.url.indexOf('.js') != -1 && req.url.indexOf('node_modules') != -1
+        && req.url.indexOf('.json') == -1) { //req.url has the pathname, check if it conatins '.js'
         fs.readFile(__dirname + '/' + req.url, function (err, data) {
             if (err) console.log(err);
             res.writeHead(200, { 'Content-Type': 'text/javascript' });
@@ -76,7 +82,7 @@ var server = http.createServer((req, res) => {
         });
     }
     if (req.url.indexOf('.pdf') != -1 && req.url.indexOf('.json') == -1) { //req.url has the pathname, check if it conatins '.pdf'
-        fs.readFile(__dirname + '/data' + req.url, function (err, data) {
+        fs.readFile(__dirname + req.url, function (err, data) {
             if (err) console.log(err);
             res.writeHead(200, { 'Content-Type': 'application/pdf' });
             res.write(data);

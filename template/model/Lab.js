@@ -1,6 +1,5 @@
 class Lab {
-    constructor(Id, Name, Content, LOC) {
-        this.Id = Id;
+    constructor(Name, Content, LOC) {
         this.Name = Name;
         this.Content = Content;
         this.LOC = LOC;

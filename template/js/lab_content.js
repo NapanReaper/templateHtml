@@ -51,7 +51,7 @@ const View = {
                 { data: 'LOC' },
                 {
                     render: function (data, type, row, meta) {
-                        return `<a class="btn btn-primary" href="${row.Content}" role="button">View Detail</a>`
+                        return `<a class="btn btn-primary" href="viewLab?labId=${row.Id}" role="button">View Detail</a>`
                     }
                 }
             ]
