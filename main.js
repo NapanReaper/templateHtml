@@ -27,19 +27,22 @@ var server = http.createServer((req, res) => {
         if (req.method == 'GET') {
             let subjectId = LabDAO.readSubject();
             data = LabDAO.readAssignmentBySubject(subjectId);
-            console.log(data);
+            // console.log(data);
             res.end(JSON.stringify(data));
         }
     }
-    if (req.url === '/getLabPdf') {
+    if (req.url.indexOf('/getLabPdf') != -1) {
         if (req.method == 'GET') {
-            res.end('/Data/LAB321/Lab1/lab1.pdf');
+            var labId = LabDAO.getLabId(req.url.replace('/', ''));
+            var lab = LabDAO.getLabInfoById(labId);
+            var labObj = LabDAO.getLabInfo(lab)
+            console.log(labObj);
+            res.end(JSON.stringify(labObj));
         }
     }
     //req.url has the pathname, check if it conatins './Java'
     if (req.url.indexOf('viewLab?') != -1) {
-        var labId = LabDAO.getLabById(req.url.replace('/', ''));
-        LabDAO.geLabPdfById(labId);
+
         fs.readFile(__dirname + '/template/views/viewLab.html', function (err, data) {
             if (err) console.log(err);
             res.writeHead(200, { 'Content-Type': 'text/html' });

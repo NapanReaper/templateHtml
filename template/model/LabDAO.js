@@ -31,7 +31,6 @@ exports.readAssignmentBySubject = (subjectId) => {
             for (const property in obj) {
                 arr.push(obj[property]);
             }
-
         }
     } catch (err) {
         console.log(err);
@@ -39,23 +38,28 @@ exports.readAssignmentBySubject = (subjectId) => {
     return arr;
 }
 exports.getLabId = (param) => {
-    var labId = param.slice(param.lastIndexOf('?') + 1, param.length);
+    var labId = param.slice(param.lastIndexOf('=') + 1, param.length);
+    console.log("LabId:", labId);
     return labId;
 }
 exports.getLabInfoById = (labId) => {
-    let subject = readSubject();
-    let subjectArr = readAssignmentBySubject(subject);
-    console.log(subjectArr);
+    let subject = this.readSubject();
+    let subjectArr = this.readAssignmentBySubject(subject);
+    const found = subjectArr.find(element => element.Id == labId);
+    // console.log("found", found);
+    return found
 }
-exports.geLabPdfById = (labName) => {
-    let pdfFile = `${labName}.pdf`;
-    let pdfLink = null
+exports.getLabInfo = (lab) => {
+    let pdfLink = ""
+    let labObj = null
     try {
         let subjectId = this.readSubject();
-        let pdfPath = path.join(dataFolderPath, subjectId, labName, pdfFile)
+        let pdfPath = path.join(paths.DATA_FOLDER, subjectId, lab.Name, lab.Content)
         pdfLink = pdfPath
+        labObj = new Lab(lab.Id, lab.Name, pdfLink, lab.LOC)
+        console.log(labObj);
     } catch (err) {
         console.log(err);
     }
-    return pdfLink
+    return labObj
 }
