@@ -50,8 +50,9 @@ const View = {
 
     },
     renderLab: function () {
-        let lab = Octopus.getLab();
-        let labObj = JSON.parse(lab);
+        let labData = Octopus.getLab().split('-');
+        console.log(labData[1]);
+        let labObj = JSON.parse(labData[1]);
         $('#excerciseName').html(labObj.Name)
         $('#LOC').html(labObj.LOC)
         loadPdfAndPaging(labObj.Content);

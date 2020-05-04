@@ -19,7 +19,7 @@ function checkIp(ip, currentdate) {
         let rollNumber = ""
         student.forEach(element => {
             if (element.IpAddress === ip) {
-                rollNumber = element.studentCode;
+                rollNumber = element.RollNumber;
             }
         });
         console.log(`rollNumber : ${rollNumber}`);

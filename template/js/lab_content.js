@@ -36,7 +36,9 @@ const Octopus = {
         View.renderLab()
     }, getLabs: function () {
         return Model.labs;
-    },
+    }, filterStatus: function () {
+        View.filterStatus();
+    }
 }
 //views
 const View = {
@@ -65,6 +67,14 @@ const View = {
             View.mainTable.row.add(e);
         });
         View.mainTable.draw();
+    }, filterStatus: function () {
+        let table = View.mainTable;
+        if (table.column(3).search() !== '200') {
+            table
+                .column(3)
+                .search('200')
+                .draw();
+        }
     }
 }
 

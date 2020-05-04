@@ -9,6 +9,26 @@
     <script src="/viewLab.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/style.css">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#abc').click(function (event) {
+                event.preventDefault();
+                var href = $(this).attr('href');
+                console.log(href);
+                $.ajax({
+                    url: href,
+                    data: { 'banch': 'sabc', 'template': 'cef' },
+                    method: 'GET',
+                    success: () => {
+                        console.log('yes');
+                    },
+                    error: (e) => {
+                        console.log(e.toString());
+                    }
+                })
+            });
+        });
+    </script>
 </head>
 
 <body>
@@ -40,7 +60,7 @@
                     <canvas id="the-canvas"></canvas>
                 </div>
                 <div style="float:left" id="sidebar">
-                    <a class="btn btn-primary" href="#" role="button">Open In NetBeans</a>
+                    <a class="btn btn-primary" href="createSnapShot" role="button" id="abc">Open In NetBeans</a>
                     <br>
                     <a class="btn btn-primary" href="#" role="button">Open MSSQL</a>
                     <br>

@@ -5,7 +5,7 @@ const http = require('http');
 const fs = require('fs');
 const { httpListener } = require('./utils/httpListener');
 const LabDAO = require('./template/model/LabDAO')
-
+const gitHandler = require('./utils/gitHandler')
 // Port on which the server will create 
 const PORT = 1800;
 
@@ -36,7 +36,8 @@ var server = http.createServer((req, res) => {
             var labId = LabDAO.getLabId(req.url.replace('/', ''));
             var lab = LabDAO.getLabInfoById(labId);
             var labObj = LabDAO.getLabInfo(lab)
-            console.log(labObj);
+            // console.log(labObj);
+            res.write('abc-');
             res.end(JSON.stringify(labObj));
         }
     }
@@ -92,6 +93,10 @@ var server = http.createServer((req, res) => {
             res.end();
         });
     }
+    if (req.url.indexOf('createSnapShot') != -1) { //req.url has the pathname, check if it conatins '.pdf'
+        res.setHeader('Refresh', '1');
+        res.end();
+    }
     if (req.url.indexOf('.json') != -1) { //req.url has the pathname, check if it conatins '.json'
         var pattern = /\?(.*)/g;
         var sanitizePath = req.url.replace(pattern, '');
@@ -104,10 +109,11 @@ var server = http.createServer((req, res) => {
     }
 }).listen(PORT);
 server.on('connection', function (sock) {
+    // gitHandler.createGitDirectory('Lab321');
     let ipv4Prefix = '::ffff:'
     var ip = sock.remoteAddress.replace(ipv4Prefix, '')
-    // console.log('Client connected from: ' + ip);
-
+    console.log('Client connected from: ' + ip);
+    // console.log(request.connection.remoteAddress);
     // Client address at time of connection ----^
     // httpListener(ip);
 });

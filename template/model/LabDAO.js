@@ -39,7 +39,7 @@ exports.readAssignmentBySubject = (subjectId) => {
 }
 exports.getLabId = (param) => {
     var labId = param.slice(param.lastIndexOf('=') + 1, param.length);
-    console.log("LabId:", labId);
+    // console.log("LabId:", labId);
     return labId;
 }
 exports.getLabInfoById = (labId) => {
@@ -57,7 +57,7 @@ exports.getLabInfo = (lab) => {
         let pdfPath = path.join(paths.DATA_FOLDER, subjectId, lab.Name, lab.Content)
         pdfLink = pdfPath
         labObj = new Lab(lab.Id, lab.Name, pdfLink, lab.LOC)
-        console.log(labObj);
+        // console.log(labObj);
     } catch (err) {
         console.log(err);
     }
